@@ -1,13 +1,18 @@
 <?php
 
-
 namespace App\Services\Abstraction;
-
 
 use App\Factories\FileReader;
 
+/**
+ * Class BaseFileCompiler
+ * @package App\Services\Abstraction
+ */
 abstract  class BaseFileCompiler
 {
+    /**
+     * @var
+     */
     protected $files;
 
     const TYPE_NOT_EXIST_FILE_2 = '-';
@@ -23,23 +28,29 @@ abstract  class BaseFileCompiler
         $this->files = $files;
     }
 
-    public abstract function run();
+    /**
+     * @return array
+     */
+    public abstract function run(): array;
 
-
+    /**
+     * @return array
+     */
     public function getContents()
     {
         $data = [];
-
         foreach ($this->files as $file) {
             $data[] = $this->getContent($file);
         }
 
         return  $data;
     }
+
     /**
-     *
+     * @param $file
+     * @return array
      */
-    public function getContent($file)
+    public function getContent($file): array
     {
         return (new FileReader($file))->run();
     }
